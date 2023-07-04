@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>eMeeting • Video Meeting</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="video.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script defer src="app.js"></script>
+    <script defer src="video.js"></script>
+    <script defer src="https://kit.fontawesome.com/f45cd9c28c.js" crossorigin="anonymous" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <div class="loading-screen hidden" id="loading1">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <main id="main">
+
+
+        <div class="container mx-auto py-10">
+            <h1 class="text-3xl mb-6">eMeetings - Free video meetings</h1>
+
+            <div class="mb-8" id="joinR">
+                <h2 class="text-xl mb-2">Join a Room</h2>
+                <form id="joinRoomForm">
+                    <label for="roomCode" class="block mb-1">Room Code:</label>
+                    <input type="text" id="roomCode" name="roomCode" placeholder="xxxx xxxx xxxx" required
+                        autocomplete="off"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                    <input type="submit" value="Join"
+                        class="mt-4 px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                </form>
+
+                <div class="mt-4">
+                    <button class="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                        onclick="createRoomS()">Create
+                        a
+                        Room</button>
+                </div>
+            </div>
+
+            <div class="hidden" id="createR">
+                <h2 class="text-xl mb-2">Create a Room</h2>
+                <form id="createRoomForm">
+                    <label for="roomName" class="block mb-1">Room Name:</label>
+                    <input type="text" id="roomName" name="roomName" required autocomplete="off"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                    <label for="duration" class="block mb-1 mt-4">Duration:</label>
+                    <select id="duration" name="duration"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="30">30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="120">2 hours</option>
+                        <option value="180">3 hours</option>
+                        <option value="240">4 hours</option>
+                        <option value="300">5 hours</option>
+                        <option value="360">6 hours</option>
+                        <option value="420">7 hours</option>
+                        <option value="480">8 hours</option>
+                    </select>
+
+                    <label for="password" class="block mb-1 mt-4">Password:</label>
+                    <input type="password" id="password" name="password" autocomplete="new-password"
+                        placeholder="Optional"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                    <label for="startDate" class="block mb-1 mt-4">Start Date:</label>
+                    <input type="datetime-local" id="startDate" name="startDate" autocomplete="off"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+
+
+                    <label for="server" class="block mb-1 mt-4">Server:</label>
+                    <select id="server" name="server" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="0" selected disabled>Server Location</option>
+                        <optgroup label="Europe">
+                            <option value="1">Paris</option>
+                            <option value="2">London</option>
+                        </optgroup>
+
+                        <optgroup label="North America">
+                            <option value="3">Washington D.C.</option>
+                            <option value="4">San Francisco</option>
+                        </optgroup>
+
+                        <optgroup label="South America">
+                            <option value="5" disabled>Sau Paulo</option>
+                        </optgroup>
+
+                        <optgroup label="Asia Pacific">
+                            <option value="6" disabled>Hong Kong</option>
+                            <option value="7" disabled>Tokyo</option>
+                            <option value="8" disabled>Singapore</option>
+                            <option value="9" disabled>Mumbai</option>
+                            <option value="10" disabled>Sydney</option>
+                        </optgroup>
+
+                        <optgroup label="Africa">
+                            <option value="11" disabled>Cape Town</option>
+                        </optgroup>
+
+
+                    </select>
+                    <input type="submit" value="Create"
+                        class="mt-4 px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                </form>
+
+                <div class="mt-4">
+                    <button class="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                        onclick="joinRoomS()">Join a Room</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+    <footer>
+        <div class="container mx-auto py-4 text-center text-gray-500">
+            <p>&copy; 2023 eMeetings. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
