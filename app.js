@@ -111,6 +111,11 @@ function createRoom(event) {
         .then(() => {
             const roomID = roomRef.key;
             console.log("Room ID: " + roomID);
+
+            // Reset form
+            let createRoomForm = document.getElementById('createRoomForm');
+            createRoomForm.reset();
+
             showPopup(roomName, duration, startDate, roomID, videoLink, password);
         })
         .catch((error) => {
@@ -124,7 +129,7 @@ createRoomForm.addEventListener('submit', createRoom);
 
 function showPopup(roomName, duration, startDate, roomCode, videoLink, password) {
     const popup = document.createElement('div');
-    popup.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'bottom-0', 'flex', 'items-center', 'justify-center', 'bg-gray-900', 'bg-opacity-50', 'z-50');
+    popup.classList.add('modal', 'top-0', 'left-0', 'right-0', 'bottom-0', 'flex', 'items-center', 'justify-center', 'bg-gray-900', 'bg-opacity-50', 'z-50');
 
     let time = new Date(startDate).toLocaleString();
     let rCode = formatCardNumber2(roomCode);
@@ -140,6 +145,7 @@ function showPopup(roomName, duration, startDate, roomCode, videoLink, password)
 
         <button id="shareRoom" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="shareRoom('${roomCode}')">Share Room</button>
         <button id="joinRoom" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="joinRoom('${roomCode}')">Join Room</button>
+        <button id="copyCode" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="copyCode('${roomCode}')">Copy Code</button>
         <button id="closePopup" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Close</button>
       </div>
     `;
@@ -151,6 +157,17 @@ function showPopup(roomName, duration, startDate, roomCode, videoLink, password)
     closePopupButton.addEventListener('click', () => {
         popup.remove();
     });
+
+    let joinRoomButton = document.getElementById('joinRoom');
+    joinRoomButton.addEventListener('click', () => {
+        popup.remove();
+    });
+
+    let copyCodeButton = document.getElementById('copyCode');
+    copyCodeButton.addEventListener('click', () => {
+        popup.remove();
+    });
+
 }
 
 function joinRoom(roomCode) {
@@ -326,8 +343,8 @@ function toast(message, duration = 4500, delay = 0) {
     toastContainer.style.justifyContent = 'center';
     toastContainer.style.width = '16rem';
     toastContainer.style.padding = '1rem';
-    toastContainer.style.backgroundColor = '#1F2937';
-    toastContainer.style.color = '#FFF';
+    toastContainer.style.backgroundColor = "var(--blue-color";
+    toastContainer.style.color = 'var(--text-color)';
     toastContainer.style.borderRadius = '0.25rem';
     toastContainer.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.25)';
     toastContainer.style.overflow = 'auto';
@@ -492,4 +509,76 @@ function createRoomS() {
 function joinRoomS() {
     document.getElementById("joinR").classList.remove("hidden");
     document.getElementById("createR").classList.add("hidden");
+}
+
+// Function to enable dark mode and to add the dark mode class to the body
+
+function enableDarkMode() {
+    document.body.classList.add("dark");
+    localStorage.setItem("darkMode", "enabled");
+}
+
+// Function to disable dark mode and to remove the dark mode class from the body
+
+function disableDarkMode() {
+    document.body.classList.remove("dark");
+    localStorage.setItem("darkMode", null);
+}
+
+// Function to check if dark mode is enabled or disabled
+
+let darkMode = localStorage.getItem("darkMode");
+
+
+if (darkMode === "enabled") {
+    enableDarkMode();
+}
+
+// Function to toggle dark mode
+
+function toggleDarkMode() {
+    darkMode = localStorage.getItem("darkMode");
+    if (darkMode !== "enabled") {
+        enableDarkMode();
+    } else {
+        disableDarkMode();
+    }
+}
+
+// Function to toggle the dark mode button
+
+function toggleDarkModeButton() {
+    darkMode = localStorage.getItem("darkMode");
+    if (darkMode !== "enabled") {
+        document.getElementById("darkModeButton").innerHTML = `<i class="fas fa-moon"></i>`;
+    } else {
+        document.getElementById("darkModeButton").innerHTML = `<i class="fas fa-sun"></i>`;
+    }
+}
+
+// Function to toggle the dark mode button when the page loads
+
+toggleDarkModeButton();
+
+
+// Function to toggle the dark mode button when the button is clicked
+
+document.getElementById("darkModeButton").addEventListener("click", () => {
+    toggleDarkMode();
+    toggleDarkModeButton();
+}
+);
+
+// Function to copy the room code to the clipboard
+
+function copyCode(code) {
+    const roomCode = code;
+    navigator.clipboard.writeText(roomCode);
+    Swal.fire({
+        title: "<span style='font-family: monospace;'>Room code copied to clipboard</span>",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+    });
 }

@@ -4,6 +4,9 @@
     left: 10%;
     width: 90%;
     height: 90%;
+    border-radius: 12px;
+    border: none;
+    margin: auto;
 }
 
 
@@ -22,12 +25,28 @@
     height: 95%;
     overflow: hidden;
     cursor: grab;
+    display: flex;
+    justify-content: center;
+    align-items: center !important;
+    flex-direction: column;
 }
 
 
 .dragging {
     cursor: grabbing;
 }
+
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    margin: auto;
+}
+
 
 /* A really really smoth zoom popup animation */
 
